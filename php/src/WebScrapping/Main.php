@@ -28,8 +28,25 @@ class Main
     $domNodesID = $xPath->query('//div[@class="volume-info"]');
     $titleNodes = $xPath->query('//h4[@class="my-xs paper-title"]');
     $typeNodes = $xPath->query('//div[@class="tags mr-sm"]');
-    echo "<pre>";
-    print_r($typeNodes);
-    echo "</pre>";
+    $authorsNodes = $xPath->query('//div[@class="authors"]');
+    $authorsNodes = $xPath->query('//div[@class="authors"]');
+    $authorsInstitutions = $xPath->query('//div[@class="authors"]/span');
+    $authors = [];
+
+    $authorGroups = $xPath->query('//div[@class="authors"]');
+    foreach ($authorGroups as $group) {
+      $groupAuthors = [];
+      $authorNodes = $group->getElementsByTagName('span');
+      foreach ($authorNodes as $authorNode) {
+        $author = [
+          'Author' => $authorNode->textContent,
+          'Instituiton' => $authorNode->getAttribute('title')
+        ];
+        $groupAuthors[] = $author;
+      }
+      $authors[] = $groupAuthors;
+    }
+
+    print_r($authors);
   }
 }
